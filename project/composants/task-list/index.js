@@ -18,7 +18,14 @@ const TaskList = ({items}) => {
             <List>
                 {
                     items.map((item)=>(
-                        <ListItem key={item.key} onClick iconName={item.iconName} onPress={pressHandler(item)}>{item.text}</ListItem>
+                        <ListItem 
+                            key={item.key} 
+                            onClick iconName={item.iconName} 
+                            badgeName={item.badgeName}
+                            onPress={pressHandler(item)}
+                        >
+                            {item.text}
+                        </ListItem>
                     ))  
                 }  
             </List>
