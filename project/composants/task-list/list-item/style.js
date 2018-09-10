@@ -21,6 +21,9 @@ export const style = (props) => ({
     centerElement:{
         flexDirection: 'row',
         alignItems: "center"  
+    },
+    icon:{
+        marginRight:10
     }
 })      
 
