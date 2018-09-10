@@ -1,5 +1,6 @@
 import { APP_COLORS } from './../../../styles/color';
-export const style = {
+import { getColorStatus } from '../../../model';
+export const style = (props) => ({
     listItemMaterial:{
         container:{
             backgroundColor:"#eee"  
@@ -7,7 +8,7 @@ export const style = {
     },
     badge:{
         container:{
-            backgroundColor: APP_COLORS.primaryAction,
+            backgroundColor: getColorStatus(props.badgeName),
             marginRight:20,
             borderRadius: 20,
             height:35,
@@ -16,12 +17,11 @@ export const style = {
         text:{
             color: APP_COLORS.primaryText 
         }  
-              
     },
     centerElement:{
         flexDirection: 'row',
         alignItems: "center"  
     }
-};    
+})      
 
 
