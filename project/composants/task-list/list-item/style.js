@@ -22,7 +22,7 @@ export const style = (props) => ({
         flexDirection: 'row',
         alignItems: "center"  
     },
-    icon:{
+    icone:{
         marginRight:10
     }
 })      

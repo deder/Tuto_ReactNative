@@ -10,7 +10,7 @@ class ListItem extends Component {
         }
     }
     renderIcon = () => {
-        return (<Icon name={this.props.iconName} style={this.props.style.icon} />)      
+        return (<Icon name={this.props.iconName} style={this.state.style.icone} />)      
     }
     renderBadge = () =>(
         <Button primary text={this.props.badgeName} disabled style={this.state.style.badge}/>

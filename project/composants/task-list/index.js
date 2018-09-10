@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeContext, getTheme} from 'react-native-material-ui';  
+import { ThemeContext, getTheme, ActionButton} from 'react-native-material-ui';  
 import { APP_COLORS } from './../../styles/color';
 import ListItem from './list-item';
 import List from './list';
@@ -11,7 +11,10 @@ const uiTheme = {
 };
 const TaskList = ({items}) => {
     const pressHandler = (item)=>(event)=>{
-        console.log(item);      
+        console.log(item, event);      
+    }
+    const pressActionHandler = (event)=>{
+        console.log('press', event);
     }
     return (
         <ThemeContext.Provider value={getTheme(uiTheme)}>  
@@ -26,10 +29,23 @@ const TaskList = ({items}) => {
                         >
                             {item.text}
                         </ListItem>
-                    ))  
+                    ))      
                 }  
             </List>
-        </ThemeContext.Provider>
+            <ActionButton
+                actions={[{ icon: 'add', label: 'Créer une tache' }]}
+                icon="reorder"   
+                transition="speedDial"
+                onPress={pressActionHandler}
+                style={
+                    {
+                        container:{
+                            backgroundColor:APP_COLORS.primaryAction
+                        }
+                    }
+                }
+            />
+        </ThemeContext.Provider>     
     )
 }
 export default TaskList
