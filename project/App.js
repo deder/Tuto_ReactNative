@@ -4,7 +4,7 @@ import Header from './composants/Header';
 import { ListItem, ThemeContext, getTheme, Button, Toolbar  } from 'react-native-material-ui';  
 import { APP_COLORS } from './styles/color';
 import TaskList from './composants/task-list/index';
-import { TASK } from './model/index';
+import { TASK, getTasks } from './model/index';
 
 const uiTheme = {
   overlayContainer:{
@@ -25,20 +25,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const taskList = [
-  {
-      text: 'test fred', 
-      iconName: "arrow-forward",
-      badgeName: TASK.doneStatus,
-      key: '0'
-  }, 
-  {
-      text: 'Démonstration', 
-      iconName: "arrow-forward",  
-      badgeName: TASK.todoStatus,
-      key: '1'
-  }
-];
+const taskList = getTasks();
 
 export default class App extends React.Component {
   constructor(props) {
