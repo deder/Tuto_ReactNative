@@ -6,8 +6,13 @@ class ListItem extends Component {
     constructor(props){
         super(props);
         this.state = {
-            style : style(this.props)
+            style : style(props)
         }
+    }
+    componentWillReceiveProps(props){
+        this.setState(
+            {style : style(props)}    
+        );  
     }
     renderIcon = () => {
         return (<Icon name={this.props.iconName} style={this.state.style.icone} />)      
@@ -15,18 +20,10 @@ class ListItem extends Component {
     renderBadge = () =>(
         <Button primary text={this.props.badgeName} disabled style={this.state.style.badge}/>
     )
-    renderAvatar = () =>(
-        <Avatar text="TE" size={40} />
-    )
     renderRightElement = () => (
         <View style={this.state.style.centerElement}>
             {this.renderBadge()}
             {this.renderIcon()}   
-        </View>
-    )
-    renderLeftElement = () => (
-        <View style={this.state.style.centerElement}>
-            {this.renderAvatar()}
         </View>
     )
     render() {
@@ -36,7 +33,6 @@ class ListItem extends Component {
                 divider
                 centerElement={this.props.children}
                 rightElement={this.renderRightElement()} 
-                leftElement={this.renderLeftElement()}  
                 onPress={this.props.onPress} 
                 onLongPress={this.props.onLongPress}    
             />
