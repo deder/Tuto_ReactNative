@@ -9,13 +9,8 @@ const uiTheme = {
         primaryColor: APP_COLORS.primary, 
     }
 };
-const TaskList = ({items}) => {
-    const pressHandler = (item)=>(event)=>{
-        console.log(item, event);      
-    }
-    const pressActionHandler = (event)=>{
-        console.log('press', event);
-    }
+const TaskList = ({items, onPressListItem, onLongPressListItem, onPressBtnAction}) => {
+
     return (
         <ThemeContext.Provider value={getTheme(uiTheme)}>  
             <List>
@@ -25,7 +20,8 @@ const TaskList = ({items}) => {
                             key={item.key} 
                             onClick iconName={item.iconName} 
                             badgeName={item.badgeName}
-                            onPress={pressHandler(item)}
+                            onPress={onPressListItem(item)}
+                            onLongPress={onLongPressListItem(item)}
                         >
                             {item.text}
                         </ListItem>
@@ -36,7 +32,7 @@ const TaskList = ({items}) => {
                 actions={[{ icon: 'add', label: 'Créer une tache' }]}
                 icon="reorder"   
                 transition="speedDial"
-                onPress={pressActionHandler}
+                onPress={onPressBtnAction}
                 style={
                     {
                         container:{

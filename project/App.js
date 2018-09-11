@@ -35,12 +35,24 @@ export default class App extends React.Component {
         taskList
     };
   }      
-
-  render() {
+  onPressListItemHandler = (item)=>(event)=>{
+    console.log(item, "Press");      
+  }
+  onLongPressListItemHandler = (item)=>(event)=>{
+    console.log(item, "LongPress");        
+  }
+  onPressBtnActionHandler = (event)=>{
+    console.log('Click', event);
+  }
+  render() {     
     return (
         <ThemeContext.Provider value={getTheme(uiTheme)} style={styles.container} >    
           <Header content="Liste de tâches"/>     
-          <TaskList items={this.state.taskList}/>
+          <TaskList items={this.state.taskList} 
+          onPressBtnAction={this.onPressBtnActionHandler} 
+          onPressListItem={this.onPressListItemHandler} 
+          onLongPressListItem={this.onLongPressListItemHandler}
+          />
         </ThemeContext.Provider>
     );
   }

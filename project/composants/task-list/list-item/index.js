@@ -37,7 +37,8 @@ class ListItem extends Component {
                 centerElement={this.props.children}
                 rightElement={this.renderRightElement()} 
                 leftElement={this.renderLeftElement()}  
-                onPress={this.props.onPress}    
+                onPress={this.props.onPress} 
+                onLongPress={this.props.onLongPress}    
             />
         )
     }
