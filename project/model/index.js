@@ -116,6 +116,18 @@ export const getTasks = () => {
       iconName: "arrow-forward",  
       badgeName: TASK.todoStatus,
       key: '17'
-    }
+    },
+    {
+      text: 'test fred', 
+      iconName: "arrow-forward",
+      badgeName: TASK.doneStatus,
+      key: '18'
+    }, 
+    {
+      text: 'Démonstration', 
+      iconName: "arrow-forward",  
+      badgeName: TASK.todoStatus,
+      key: '19'  
+    }    
   ];
 } 
