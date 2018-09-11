@@ -9,8 +9,9 @@ class List extends Component {
             <FlatList style={style.flatList}
                 data={this.props.children}
                 renderItem={({item})=>item}
-            />
-        )
+                contentContainerStyle={{ padding: 20 }}  
+           />
+        )  
     }
 
 }
