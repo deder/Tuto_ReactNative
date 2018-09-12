@@ -9,8 +9,7 @@ const uiTheme = {
         primaryColor: APP_COLORS.primary,
     }
 };
-const TaskList = ({ items, onPressListItem, onLongPressListItem, onPressBtnAction }) => {
-
+const TaskList = ({ items, onPressListItem, onLongPressListItem }) => {
     return (
         <ThemeContext.Provider value={getTheme(uiTheme)}>
             <List>
@@ -18,7 +17,7 @@ const TaskList = ({ items, onPressListItem, onLongPressListItem, onPressBtnActio
                     items.map((item) => (
                         <ListItem
                             key={item.key}
-                            onClick iconName={item.iconName}
+                            iconName={item.iconName}
                             badgeName={item.badgeName}
                             onPress={onPressListItem(item)}
                             onLongPress={onLongPressListItem(item)}
@@ -28,19 +27,6 @@ const TaskList = ({ items, onPressListItem, onLongPressListItem, onPressBtnActio
                     ))
                 }
             </List>
-            <ActionButton
-                actions={[{ icon: 'add', label: 'Créer une tache' }]}
-                icon="reorder"
-                transition="speedDial"
-                onPress={onPressBtnAction}
-                style={
-                    {
-                        container: {
-                            backgroundColor: APP_COLORS.primaryAction
-                        }
-                    }
-                }
-            />
         </ThemeContext.Provider>
     )
 }
