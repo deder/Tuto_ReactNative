@@ -1,18 +1,28 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native'
-import { Button, Dialog as DialogMaterial, DialogDefaultActions } from 'react-native-material-ui';
+import { Text, View } from 'react-native';
+import { Dialog as DialogMaterial } from 'react-native-material-ui';
 import Modal from "react-native-modal";
 import { style, styleLight } from './style';
-
-const Dialog = ({isVisible, onPress, hasChangeStatut}) => {
- const renderDeleteButton = ()=>{
-     if(hasChangeStatut){
-        return (<Button text="Changer le statut" style={styleLight.buttonChangeStatus} onPress={onPress("change")}/> )
-     }
- }
-  return (
-      <View>    
+const Dialog = ({isVisible, onPress, title, content, renderButtons, key}) => {
+    const _renderContent = () => {
+        if(content instanceof Function){
+            return (content())
+        }
+        return (
+            <Text>
+                {content} 
+            </Text> 
+        )
+    }
+    const _renderButtons = () =>{
+        if(renderButtons){
+            return renderButtons()
+        }
+        return []
+    }
+    return (  
         <Modal
+            key={key}
             isVisible={isVisible}
             animationIn={'slideInUp'}
             animationOut={'slideOutDown'}   
@@ -24,21 +34,18 @@ const Dialog = ({isVisible, onPress, hasChangeStatut}) => {
             style={style.Modal} >      
                 <View style={style.firstView}>
                     <DialogMaterial style={styleLight.dialogMaterial}>
-                        <DialogMaterial.Title><Text>Tâche</Text></DialogMaterial.Title>
+                        <DialogMaterial.Title>
+                            <Text>{title}</Text>
+                        </DialogMaterial.Title>
                         <DialogMaterial.Content>
-                        <Text>
-                            Que souhaitez-vous faire sur la tâche ?  
-                        </Text>   
+                            {_renderContent()}     
                         </DialogMaterial.Content>
                         <View style={styleLight.dialogMaterialAction}>
-                            <Button text="Supprimer" style={styleLight.buttonDelete} onPress={onPress("delete")}/>
-                            {renderDeleteButton()}   
+                            {_renderButtons()}
                         </View>  
-                    </DialogMaterial>
+                    </DialogMaterial>  
                 </View>
         </Modal>
-      </View>
-  )
+    )
 }
-
 export default Dialog;

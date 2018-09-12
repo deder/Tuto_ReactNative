@@ -18,16 +18,6 @@ export const style = StyleSheet.create({
 }) 
 
 export const styleLight = {
-    buttonChangeStatus: {
-        text:{
-            color: APP_COLORS.primaryAction,   
-        }
-    },
-    buttonDelete:{
-        text:{
-            color: 'red'
-        }
-    },
     dialogMaterial:{
         container: {
             width:450
