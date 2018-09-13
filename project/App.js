@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import Header from './composants/Header';
-import { Card, ActionButton, ThemeContext, getTheme, Button, Toolbar  } from 'react-native-material-ui';  
+import { Card, ActionButton, ThemeContext, getTheme} from 'react-native-material-ui';  
 import { APP_COLORS } from './styles/color';
 import TaskList from './composants/task-list/index';
 import { TASK } from './model/index';
@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const storageKey = 'taskList';
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -36,8 +38,19 @@ export default class App extends React.Component {
         addTaskDialogIsVisible: false,
         currentTask:{}  
     };
-  }      
-  onPressListItemHandler = (item)=>(event)=>{
+  }
+  
+  componentWillMount(){
+    AsyncStorage.getItem(storageKey).then( taskList=>{
+      if(taskList){
+        this.setState({
+          taskList: JSON.parse(taskList)     
+        })
+      }
+    })
+  }
+
+  onPressListItemHandler = (item)=>(event)=>{  
     this.setState({
       editTaskDialogIsVisible:true,
       currentTask:item,
@@ -77,7 +90,9 @@ export default class App extends React.Component {
         });
         this.setState({
           taskList
-        })
+        }, ()=>{
+          this.saveTaskList()
+        });
     }else if(type==="create"){
       let taskList = [{
         key: Math.random(),
@@ -87,6 +102,8 @@ export default class App extends React.Component {
       } , ...this.state.taskList];
       this.setState({
         taskList
+      }, ()=>{
+        this.saveTaskList()
       });
     }
     this.setState({
@@ -108,7 +125,9 @@ export default class App extends React.Component {
       })
       this.setState({
         taskList
-      })
+      }, ()=>{
+        this.saveTaskList()
+      });
     }else if(type==="change"){
       let taskList = this.state.taskList.map((task)=>{
       if(this.state.currentTask.key == task.key){
@@ -118,7 +137,9 @@ export default class App extends React.Component {
       });
       this.setState({
         taskList
-      })
+      }, ()=>{
+        this.saveTaskList()
+      });
     }
     this.setState({
       editTaskDialogIsVisible:false
@@ -129,6 +150,12 @@ export default class App extends React.Component {
         });
       },300);
     }) 
+  }
+  saveTaskList = () => {
+    AsyncStorage.setItem(
+      storageKey,
+      JSON.stringify(this.state.taskList)
+    )
   }
   renderTaskList= () => {
     if(this.state.taskList && this.state.taskList.length > 0){
@@ -152,7 +179,8 @@ export default class App extends React.Component {
               padding:10, 
               fontSize:18  
             }}>
-              Cliquer sur le bouton menu en bas à droite et appuyer sur ajouter une tache</Text>
+              Cliquer sur le bouton menu en bas à droite et appuyer sur ajouter une tache
+            </Text>
           </Card>
         </View>
       )
@@ -170,9 +198,9 @@ export default class App extends React.Component {
               onPress={this.onPressBtnActionHandler}
               style={
                   {
-                      container: {
-                          backgroundColor: APP_COLORS.primaryAction
-                      }
+                    container: {
+                      backgroundColor: APP_COLORS.primaryAction
+                    }
                   }
               }
           />
