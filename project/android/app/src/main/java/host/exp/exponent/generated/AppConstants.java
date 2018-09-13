@@ -12,7 +12,7 @@ import host.exp.exponent.Constants;
 public class AppConstants {
 
   public static final String VERSION_NAME = "2.7.2";
-  public static String INITIAL_URL = "exp://exp.host/@fcosta/Project";
+    public static String INITIAL_URL = "exp://exp.host/@fcosta/Project";
   public static final boolean IS_DETACHED = true;
   public static final String SHELL_APP_SCHEME = "expd715d9e158894574af81e1d4d45d4231";
   public static final String RELEASE_CHANNEL = "default";
@@ -25,9 +25,14 @@ public class AppConstants {
   static {
     List<Constants.EmbeddedResponse> embeddedResponses = new ArrayList<>();
 
-    // ADD EMBEDDED RESPONSES HERE
-    // START EMBEDDED RESPONSES
-    // END EMBEDDED RESPONSES
+    
+        
+        
+        // ADD EMBEDDED RESPONSES HERE
+        // START EMBEDDED RESPONSES
+        embeddedResponses.add(new Constants.EmbeddedResponse("https://exp.host/@fcosta/Project/index.exp", "assets://shell-app-manifest.json", "application/json"));
+        embeddedResponses.add(new Constants.EmbeddedResponse("https://d1wp6m56sqw74a.cloudfront.net/%40fcosta%2FProject%2F1.0.0%2Feba16b1025558e9d4b82c131c52c3f7b-29.0.0-android.js", "assets://shell-app.bundle", "application/javascript"));
+        // END EMBEDDED RESPONSES
     EMBEDDED_RESPONSES = embeddedResponses;
   }
 

@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "Project",
-    "description": "This project is really great.",
+    "icon":"./listetacheapp.png",
+    "description": "Gestionnaire de tache",
     "slug": "Project",
     "privacy": "public",
     "sdkVersion": "29.0.0",
@@ -11,7 +12,6 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -24,7 +24,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier":"com.fcos.Project"
     },
     "isDetached": true,
     "detach": {
