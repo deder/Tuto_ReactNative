@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
-import Header from './composants/Header';
+import Header from './composants/header';
 import { Card, ActionButton, ThemeContext, getTheme} from 'react-native-material-ui';  
 import { APP_COLORS } from './styles/color';
-import TaskList from './composants/task-list/index';
+import TaskList from './composants/list/task-list';
 import { TASK } from './model/index';
 import EditTaskDialog from './composants/dialog/edit-task-dialog/index';   
 import AddTaskDialog from './composants/dialog/add-task-dialog/index';

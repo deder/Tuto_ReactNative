@@ -1,8 +1,8 @@
 import React from 'react';
 import { ThemeContext, getTheme, ActionButton } from 'react-native-material-ui';
-import { APP_COLORS } from './../../styles/color';
-import ListItem from './list-item';
-import List from './list';
+import { APP_COLORS } from './../../../styles/color';
+import ListItem from '../list-item';
+import List from '../index';
 
 const uiTheme = {
     palette: {
