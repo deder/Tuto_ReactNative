@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-export const style = StyleSheet.create({
+export const style = {
     flatList:{
         backgroundColor:"#ffffff"
     }
-});     
+};     
