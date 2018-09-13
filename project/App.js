@@ -67,7 +67,8 @@ export default class App extends React.Component {
     }else{
       type= props;
     }
-    if(type==="edit"){//Edit
+    if(type==="edit"){
+      //Edit
       let taskList = this.state.taskList.map((task)=>{
         if(this.state.currentTask.key == task.key){
             task.text = value;
@@ -89,8 +90,13 @@ export default class App extends React.Component {
       });
     }
     this.setState({
-      addTaskDialogIsVisible:false,
-      currentTask:{}
+      addTaskDialogIsVisible:false
+    }, () => {
+      setTimeout(()=>{
+        this.setState({
+          currentTask:{}
+        });
+      },300);
     }) 
   }
   onPressButtonEditTaskDialog = (type)=>(event)=>{
@@ -115,8 +121,13 @@ export default class App extends React.Component {
       })
     }
     this.setState({
-      editTaskDialogIsVisible:false,
-      currentTask:{}
+      editTaskDialogIsVisible:false
+    }, () => {
+      setTimeout(()=>{
+        this.setState({
+          currentTask:{}  
+        });
+      },300);
     }) 
   }
   render() {     
