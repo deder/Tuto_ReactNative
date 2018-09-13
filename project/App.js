@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Header from './composants/Header';
-import { ListItem, ActionButton, ThemeContext, getTheme, Button, Toolbar  } from 'react-native-material-ui';  
+import { Card, ActionButton, ThemeContext, getTheme, Button, Toolbar  } from 'react-native-material-ui';  
 import { APP_COLORS } from './styles/color';
 import TaskList from './composants/task-list/index';
 import { TASK } from './model/index';
@@ -130,14 +130,39 @@ export default class App extends React.Component {
       },300);
     }) 
   }
+  renderTaskList= () => {
+    if(this.state.taskList && this.state.taskList.length > 0){
+      return (          
+        <TaskList items={this.state.taskList} 
+          onPressListItem={this.onPressListItemHandler} 
+          onLongPressListItem={this.onLongPressListItemHandler}
+        />
+      )
+    }else{
+      return (
+        <View style={{
+          margin:20
+        }}>
+          <Card style={{
+            container:{
+              backgroundColor:"#EEE"
+            }
+          }}>
+            <Text  style={{
+              padding:10, 
+              fontSize:18  
+            }}>
+              Cliquer sur le bouton menu en bas à droite et appuyer sur ajouter une tache</Text>
+          </Card>
+        </View>
+      )
+    }    
+  }
   render() {     
     return (
         <ThemeContext.Provider value={getTheme(uiTheme)} style={styles.container} >    
-          <Header content="Liste de tâches"/>    
-          <TaskList items={this.state.taskList} 
-            onPressListItem={this.onPressListItemHandler} 
-            onLongPressListItem={this.onLongPressListItemHandler}
-          />
+          <Header content="Liste de tâches"/>
+          {this.renderTaskList()}
           <ActionButton
               actions={[{ icon: 'add', label: 'Créer une tache' }]}
               icon="reorder"
