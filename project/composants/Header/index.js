@@ -22,7 +22,6 @@ const uiTheme = {
       }
     },
   };
-    
 const Header = ({content}) => {
     return (
         <ThemeContext.Provider value={getTheme(uiTheme)}>  
@@ -35,11 +34,4 @@ const Header = ({content}) => {
         </ThemeContext.Provider>  
     )
 }
-
 export default Header
-/*
-    <Button primary text="Primary" /> 
-    <Button accent text="Accent" /> 
-    <Button raised primary text="Primary" />
-    <Button disabled text="Disabled" />
-*/

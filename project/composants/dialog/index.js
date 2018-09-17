@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Dialog as DialogMaterial } from 'react-native-material-ui';
 import Modal from "react-native-modal";
 import { style, styleLight } from './style';
-const Dialog = ({isVisible, onPress, title, content, renderButtons, key}) => {
+const Dialog = ({isVisible, onPress, title, content, renderButtons}) => {
     const _renderContent = () => {
         if(content instanceof Function){
             return (content())
@@ -22,7 +22,6 @@ const Dialog = ({isVisible, onPress, title, content, renderButtons, key}) => {
     }
     return (  
         <Modal
-            key={key}
             isVisible={isVisible}
             animationIn={'slideInUp'}
             animationOut={'slideOutDown'}   

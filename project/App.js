@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Header from './composants/Header';
-import { ListItem, ActionButton, ThemeContext, getTheme, Button, Toolbar  } from 'react-native-material-ui';  
+import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import Header from './composants/header';
+import { Card, ActionButton, ThemeContext, getTheme} from 'react-native-material-ui';  
 import { APP_COLORS } from './styles/color';
-import TaskList from './composants/task-list/index';
+import TaskList from './composants/list/task-list';
 import { TASK } from './model/index';
 import EditTaskDialog from './composants/dialog/edit-task-dialog/index';   
 import AddTaskDialog from './composants/dialog/add-task-dialog/index';
@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const storageKey = 'taskList';
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -36,8 +38,19 @@ export default class App extends React.Component {
         addTaskDialogIsVisible: false,
         currentTask:{}  
     };
-  }      
-  onPressListItemHandler = (item)=>(event)=>{
+  }
+  
+  componentWillMount(){
+    AsyncStorage.getItem(storageKey).then( taskList=>{
+      if(taskList){
+        this.setState({
+          taskList: JSON.parse(taskList)     
+        })
+      }
+    })
+  }
+
+  onPressListItemHandler = (item)=>(event)=>{  
     this.setState({
       editTaskDialogIsVisible:true,
       currentTask:item,
@@ -67,7 +80,8 @@ export default class App extends React.Component {
     }else{
       type= props;
     }
-    if(type==="edit"){//Edit
+    if(type==="edit"){
+      //Edit
       let taskList = this.state.taskList.map((task)=>{
         if(this.state.currentTask.key == task.key){
             task.text = value;
@@ -76,7 +90,9 @@ export default class App extends React.Component {
         });
         this.setState({
           taskList
-        })
+        }, ()=>{
+          this.saveTaskList()
+        });
     }else if(type==="create"){
       let taskList = [{
         key: Math.random(),
@@ -86,11 +102,18 @@ export default class App extends React.Component {
       } , ...this.state.taskList];
       this.setState({
         taskList
+      }, ()=>{
+        this.saveTaskList()
       });
     }
     this.setState({
-      addTaskDialogIsVisible:false,
-      currentTask:{}
+      addTaskDialogIsVisible:false
+    }, () => {
+      setTimeout(()=>{
+        this.setState({
+          currentTask:{}
+        });
+      },300);
     }) 
   }
   onPressButtonEditTaskDialog = (type)=>(event)=>{
@@ -102,7 +125,9 @@ export default class App extends React.Component {
       })
       this.setState({
         taskList
-      })
+      }, ()=>{
+        this.saveTaskList()
+      });
     }else if(type==="change"){
       let taskList = this.state.taskList.map((task)=>{
       if(this.state.currentTask.key == task.key){
@@ -112,21 +137,60 @@ export default class App extends React.Component {
       });
       this.setState({
         taskList
-      })
+      }, ()=>{
+        this.saveTaskList()
+      });
     }
     this.setState({
-      editTaskDialogIsVisible:false,
-      currentTask:{}
+      editTaskDialogIsVisible:false
+    }, () => {
+      setTimeout(()=>{
+        this.setState({
+          currentTask:{}  
+        });
+      },300);
     }) 
+  }
+  saveTaskList = () => {
+    AsyncStorage.setItem(
+      storageKey,
+      JSON.stringify(this.state.taskList)
+    )
+  }
+  renderTaskList= () => {
+    if(this.state.taskList && this.state.taskList.length > 0){
+      return (          
+        <TaskList items={this.state.taskList} 
+          onPressListItem={this.onPressListItemHandler} 
+          onLongPressListItem={this.onLongPressListItemHandler}
+        />
+      )
+    }else{
+      return (
+        <View style={{
+          margin:20
+        }}>
+          <Card style={{
+            container:{
+              backgroundColor:"#EEE"
+            }
+          }}>
+            <Text  style={{
+              padding:10, 
+              fontSize:18  
+            }}>
+              Cliquer sur le bouton menu en bas à droite et appuyer sur ajouter une tache
+            </Text>
+          </Card>
+        </View>
+      )
+    }    
   }
   render() {     
     return (
         <ThemeContext.Provider value={getTheme(uiTheme)} style={styles.container} >    
-          <Header content="Liste de tâches"/>    
-          <TaskList items={this.state.taskList} 
-            onPressListItem={this.onPressListItemHandler} 
-            onLongPressListItem={this.onLongPressListItemHandler}
-          />
+          <Header content="Liste de tâches"/>
+          {this.renderTaskList()}
           <ActionButton
               actions={[{ icon: 'add', label: 'Créer une tache' }]}
               icon="reorder"
@@ -134,9 +198,9 @@ export default class App extends React.Component {
               onPress={this.onPressBtnActionHandler}
               style={
                   {
-                      container: {
-                          backgroundColor: APP_COLORS.primaryAction
-                      }
+                    container: {
+                      backgroundColor: APP_COLORS.primaryAction
+                    }
                   }
               }
           />
