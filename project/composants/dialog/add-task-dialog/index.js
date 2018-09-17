@@ -3,6 +3,7 @@ import Dialog from './../index';
 import { Button } from 'react-native-material-ui'
 import { styleLight } from './style';
 import { TextField } from 'react-native-material-textfield';
+import { componentArrToReactRenderArr } from './../../../utils/react-utils';
 
 class AddTaskDialog extends Component {
   constructor(props) {
@@ -16,12 +17,17 @@ class AddTaskDialog extends Component {
     };
   }
   renderCancelButton = (key) => {
-    return (<Button key={key} text="Annuler" style={styleLight.buttonDelete} onPress={this.state.onPress({
+    return (<Button key={key} text="Annuler" 
+    style={styleLight.buttonDelete} 
+    onPress={this.state.onPress({
       type:"cancel"
     })} />)
   }
   renderValideButton = (key) => {
-    return (<Button key={key} text={(this.state.task && this.state.task.key)?"Editer":"Créer"} style={styleLight.buttonChangeStatus} onPress={this.state.onPress({
+    return (<Button key={key} 
+      text={(this.state.task && this.state.task.key)?"Editer":"Créer"} 
+      style={styleLight.buttonChangeStatus} 
+      onPress={this.state.onPress({
       type:(this.state.task && this.state.task.key)?"edit":"create",
       value:this.state.value
     })} />)
@@ -40,14 +46,14 @@ class AddTaskDialog extends Component {
     const arrayButtons = [
       this.renderForm
     ];
-    return arrayButtons.map((buttonRender, index) => buttonRender(index))
+    return componentArrToReactRenderArr(arrayButtons);
   }
   renderButtons = () => {
     const arrayButtons = [
       this.renderCancelButton,
       this.renderValideButton
     ];
-    return arrayButtons.map((buttonRender, index) => buttonRender(index))
+    return componentArrToReactRenderArr(arrayButtons);
   }
   componentWillReceiveProps(props){
     this.setState({
